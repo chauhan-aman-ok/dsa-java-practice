@@ -4,43 +4,29 @@
 
 
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.List;
-
-public class FirstNegativeInWindow {
-    public static List<Integer> firstNegInt(int arr[], int k){
-
-        List<Integer> res = new ArrayList<>();
+class Solution {
+    static List<Integer> firstNegInt(int a[], int k) {
+        // write code here
         Deque<Integer> q = new ArrayDeque<>();
-        int n = arr.length;
-
-        if (k > n) return res;
-
-        for (int i = 0; i < k; i++) {
-            if (arr[i] < 0) {
-                q.add(i);
-            }
+        List<Integer> res=new ArrayList<>();
+        for(int i=0;i<k;i++){
+             if(a[i]<0) q.add(i);
         }
-
-        if (q.isEmpty()) res.add(0);
-        else res.add(arr[q.peek()]);
-
-        for (int i = k; i < n; i++) {
-
-            while (!q.isEmpty() && q.peek() <= i - k) {
+        if(q.isEmpty()) res.add(0);
+        else res.add(a[q.peek()]);
+        int i=1,j=k;
+        while(j<a.length){
+            
+            while(!q.isEmpty() && q.peek()<i){
                 q.poll();
             }
-
-            if (arr[i] < 0) {
-                q.add(i);
-            }
-
-            if (q.isEmpty()) res.add(0);
-            else res.add(arr[q.peek()]);
+            if(a[j]<0) q.add(j);
+            
+            if(q.isEmpty()) res.add(0);
+            else res.add(a[q.peek()]);
+            
+            i++;j++;
         }
-
         return res;
     }
 }

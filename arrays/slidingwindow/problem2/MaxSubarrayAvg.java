@@ -1,28 +1,21 @@
 // Leetcode - 643
 // problem2 - find the maximum possible average of any contiguous subarray of size k.
 // topic - fixed-size sliding window
-
 class Solution {
-    public double findMaxAverage(int[] nums, int k) {
-        double currAvg = 0;
-        int currSum = 0;
-        double maxAvg = Integer.MIN_VALUE;
-
-        for (int l = 0; l < k; l++)
-            currSum += nums[l];
-        currAvg = (double) currSum / k;
-        // maxAvg = currAvg;
-        int i = 0, j = k - 1;
-
-        while (j < nums.length) {
-            if (maxAvg < currAvg)
-                maxAvg = currAvg;
-            i++;
-            j++;
-            if (j < nums.length) {
-                currSum = currSum - nums[i - 1] + nums[j];
-                currAvg = (double) currSum / k;
-            }
+    public double findMaxAverage(int[] a, int k) {
+        int sum=0;
+        for(int i=0;i<k;i++){
+            sum+=a[i];
+        }
+        double avg=(double)sum/k;
+        double maxAvg=avg;
+        int i=1;
+        int j=k;
+        while(j<a.length){
+            sum=sum+a[j]-a[i-1];
+            avg=(double)sum/k;
+            maxAvg=Math.max(maxAvg,avg);
+            i++;j++;
         }
         return maxAvg;
     }
